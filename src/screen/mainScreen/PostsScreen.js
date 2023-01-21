@@ -32,7 +32,7 @@ const PostsScreen = ({ navigation, route }) => {
       <View style={styles.userInfo}>
         <Image
           style={{ marginRight: 8, borderRadius: 16 }}
-          source={require("../../assets/images/User.jpg")}
+          source={require("../../images/User.jpg")}
         />
         <View>
           <Text style={{ fontFamily: "Roboto-Medium", fontSize: 13 }}>
