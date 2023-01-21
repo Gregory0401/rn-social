@@ -14,7 +14,7 @@ import { styles } from "./styled/RegisterScreen.styled";
 
 import AddAvatar from "../../assets/add.svg";
 
-import Input from "../../Input";
+import Input from "../Input";
 
 const initialState = {
   login: "",
@@ -65,7 +65,7 @@ const RegisterScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground
-          source={require("../../assets/images/photo.jpg")}
+          source={require("../images/photo.jpg")}
           style={styles.image}
         >
           <KeyboardAvoidingView

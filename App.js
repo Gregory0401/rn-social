@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import {useRoute} from './router'
+import {useRoute} from './src/router'
 import * as SplashScreen from "expo-splash-screen";
  
 SplashScreen.preventAutoHideAsync();
@@ -10,8 +10,8 @@ export default function App() {
   const routing = useRoute(true)
   
   const [fontsLoaded] = useFonts({
-    "DMMono-Regular": require("./fonts/DMMono-Regular.ttf"),
-    "MoonDance-Regular": require("./fonts/MoonDance-Regular.ttf")
+    "DMMono-Regular": require("./src/fonts/DMMono-Regular.ttf"),
+    "MoonDance-Regular": require("./src/fonts/MoonDance-Regular.ttf")
   })
 
   
@@ -34,25 +34,3 @@ export default function App() {
   );
 }
 
-// import React, { useState, useEffect } from "react";
-// import {} from "react-native";
-
-// import * as Font from "expo-font";
-// import { AppLoading } from "expo";
-// import { NavigationContainer } from "@react-navigation/native";
-// import {useRoute} from './router'
- 
-
-// export default function App() {
-//   const routing = useRoute(!null)
-  
-
-//   return (
-//     <>
-//       <NavigationContainer>
-//       {routing}
-//     </NavigationContainer>
-//     </>
-//   );
-// }
- 

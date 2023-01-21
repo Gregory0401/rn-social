@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
-import AddAvatar from "../../assets/add.svg";
+import AddAvatar from "../../../../assets/add.svg"
 import { Feather, EvilIcons } from "@expo/vector-icons";
 import { styles } from "./styled/ProfileScreen.styled";
 
@@ -33,7 +33,7 @@ const ProfileScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <ImageBackground
-          source={require("../../assets/images/photo.jpg")}
+          source={require("../../../images/photo.jpg")}
           resizeMode="cover"
           style={styles.image}
         >
@@ -65,7 +65,7 @@ const ProfileScreen = ({ navigation }) => {
 
               <View>
                 <Image
-                  source={require("../../assets/images/rectangle.jpg")}
+                  source={require("../../../images/rectangle.jpg")}
                   style={{ ...styles.photo, width: windowWidth - 16 * 2 }}
                 />
                 <Text style={styles.photoText}>Лес</Text>

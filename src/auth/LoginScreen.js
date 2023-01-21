@@ -12,7 +12,7 @@ import {
 
 import { styles } from "./styled/LoginScreen.styled";
 
-import Input from "../../Input";
+import Input from "../Input";
 
 const initialState = {
   email: "",
@@ -62,7 +62,7 @@ const LoginScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground
-          source={require("../../assets/images/photo.jpg")}
+          source={require("../images/photo.jpg")}
           style={styles.image}
         >
           <KeyboardAvoidingView
