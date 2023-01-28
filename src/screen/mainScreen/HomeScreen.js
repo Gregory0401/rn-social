@@ -3,16 +3,19 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { View } from "react-native";
 
+import { useDispatch } from "react-redux";
+import { authSignOutUser } from "../../../redux/auth/authOperations";
+
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-import  NestedScreens  from "./NestedScreens";
-import  CreateScreen  from "./CreateScreen";
-import  ProfileScreen  from "./ProfileScreen";
+import { NestedScreens } from "../NestedScreens/NestedScreens";
+import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
+import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
 
 const MainTab = createBottomTabNavigator();
 
- const HomeScreen = ({ navigation, route }) => {
-   
+export const HomeScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   return (
     <MainTab.Navigator initialRouteName="PostsScreen">
       <MainTab.Screen
@@ -29,7 +32,7 @@ const MainTab = createBottomTabNavigator();
             },
             headerTitleAlign: "center",
             headerTitleStyle: {
-              fontFamily: "MoonDance-Regular",
+              fontFamily: "Roboto-Medium",
               color: "#212121",
               fontSize: 17,
               lineHeight: 22,
@@ -41,7 +44,7 @@ const MainTab = createBottomTabNavigator();
                 size={24}
                 style={{ marginRight: 10 }}
                 onPress={() => {
-                  console.log("logout");
+                  dispatch(authSignOutUser());
                 }}
               />
             ),
@@ -64,7 +67,7 @@ const MainTab = createBottomTabNavigator();
       />
       <MainTab.Screen
         name="Создать публикацию"
-        component={CreateScreen}
+        component={CreatePostsScreen}
         options={() => {
           return {
             title: "Создать публикацию",
@@ -74,7 +77,7 @@ const MainTab = createBottomTabNavigator();
             },
             headerTitleAlign: "center",
             headerTitleStyle: {
-              fontFamily: "MoonDance-Regular",
+              fontFamily: "Roboto-Medium",
               color: "#212121",
               fontSize: 17,
               lineHeight: 22,
@@ -123,5 +126,3 @@ const MainTab = createBottomTabNavigator();
     </MainTab.Navigator>
   );
 };
-
-export default HomeScreen

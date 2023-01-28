@@ -14,8 +14,9 @@ import {
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
-import { styles } from "./styled/CreateScreen.styled";
-
+import { styles } from "./CreatePostsScreen.styled";
+import { addPost } from "../../../redux/posts/postsOperations";
+import { useDispatch, useSelector } from "react-redux";
 
 const initialState = {
   photoUri: "",
@@ -23,7 +24,7 @@ const initialState = {
   photoLocation: "",
 };
 
- const CreateScreen = ({ navigation }) => {
+export const CreatePostsScreen = ({ navigation }) => {
   const [state, setState] = useState(initialState);
   const [camera, setCamera] = useState(null);
   const [locationCoords, setLocationCoords] = useState(null);
@@ -32,6 +33,9 @@ const initialState = {
 
   const [isKeyboardShown, setIsKeyboardShown] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   const [windowWidth, setWindowWidth] = useState(
     Dimensions.get("window").width
@@ -69,8 +73,8 @@ const initialState = {
 
       let location = await Location.getCurrentPositionAsync({});
       const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
+        latitude: location.coords?.latitude,
+        longitude: location.coords?.longitude,
       };
       setLocationCoords(coords);
     })();
@@ -86,8 +90,11 @@ const initialState = {
   };
 
   const takePhoto = async () => {
-    const photo = await camera.takePictureAsync();
-    getLocation();
+    if (!camera) return;
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    if (status !== "granted") return;
+    const photo = await camera?.takePictureAsync();
+    await getLocation();
     setState((prevState) => ({ ...prevState, photoUri: photo.uri }));
     if (state.photoLocation && state.photoName) {
       setIsDisabled(false);
@@ -118,8 +125,15 @@ const initialState = {
       title: state.photoName,
       photo: state.photoUri,
       location: state.photoLocation,
+      id: user.id,
     };
+    dispatch(addPost(post));
     navigation.navigate("PostsScreen", { post });
+  };
+
+  const handleDelete = () => {
+    setState(initialState);
+    setIsDisabled(true);
   };
 
   return (
@@ -183,7 +197,7 @@ const initialState = {
             <View style={{ marginBottom: 16 }}>
               <TextInput
                 style={styles.input}
-                placeholder="Название..."
+                placeholder="Название"
                 value={state.photoName}
                 onSubmitEditing={() => {
                   locationRef.current.focus();
@@ -202,7 +216,7 @@ const initialState = {
                   ...styles.input,
                   paddingLeft: 32,
                 }}
-                placeholder="Местность..."
+                placeholder="Местность"
                 value={state.photoLocation?.place}
                 onChangeText={(value) => {
                   handlerChangeText(value, "photoLocation");
@@ -235,7 +249,13 @@ const initialState = {
             </View>
           </KeyboardAvoidingView>
           <View style={styles.deliteContainer}>
-            <TouchableOpacity style={styles.deliteBtn} activeOpacity={0.7}>
+            <TouchableOpacity
+              style={styles.deliteBtn}
+              activeOpacity={0.7}
+              onPress={() => {
+                handleDelete();
+              }}
+            >
               <Feather name="trash-2" size={24} color="#BDBDBD" />
             </TouchableOpacity>
           </View>
@@ -244,13 +264,3 @@ const initialState = {
     </TouchableWithoutFeedback>
   );
 };
-
-
-export default CreateScreen
-
-
-
-
-
-
-

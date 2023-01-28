@@ -5,17 +5,23 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Dimensions,
-  Keyboard,
-  KeyboardAvoidingView,
+  FlatList,
 } from "react-native";
 
-import AddAvatar from "../../../assets/add.svg"
-import { Feather, EvilIcons } from "@expo/vector-icons";
-import { styles } from "./styled/ProfileScreen.styled";
+import { useDispatch, useSelector } from "react-redux";
+import { authSignOutUser } from "../../../redux/auth/authOperations";
 
-const ProfileScreen = ({ navigation }) => {
+import { AntDesign } from "@expo/vector-icons";
+import { Feather, EvilIcons, FontAwesome5 } from "@expo/vector-icons";
+import { styles } from "./ProfileScreen.styled";
+
+export const ProfileScreen = ({ navigation }) => {
+  const user = useSelector((state) => state.auth.user);
+  const posts = useSelector((state) => state.posts.posts);
+
+  const dispatch = useDispatch();
+
   const [windowWidth, setWindowWidth] = useState(
     Dimensions.get("window").width
   );
@@ -29,71 +35,94 @@ const ProfileScreen = ({ navigation }) => {
     return () => dimensionsHandler.remove();
   }, []);
 
+  const getUserPost = () => {
+    return posts.filter((post) => post.user === user?.id);
+  };
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <ImageBackground
-          source={require("../../images/photo.jpg")}
-          resizeMode="cover"
-          style={styles.image}
-        >
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-          >
-            <View style={styles.box}>
-              <View style={styles.logoutBtn}>
-                <Feather
-                  name="log-out"
-                  color="#BDBDBD"
-                  size={24}
-                  onPress={() => {
-                    console.log("logout");
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("../../../assets/images/photo.jpg")}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <View style={styles.postsContainer}>
+          <View style={styles.logoutBtn}>
+            <Feather
+              name="log-out"
+              color="#BDBDBD"
+              size={24}
+              onPress={() => {
+                dispatch(authSignOutUser());
+              }}
+            />
+          </View>
+          <Text style={styles.userName}>{user?.name}</Text>
+          <View style={styles.avatar}>
+            <Image
+              source={{ uri: user?.avatar }}
+              style={{ width: 120, height: 120, borderRadius: 16 }}
+            />
+            <TouchableOpacity
+              style={styles.avatarBtn}
+              activeOpacity={0.7}
+              accessibilityLabel="add avatar"
+            >
+              <View style={{ backgroundColor: "#FFFFFF", borderRadius: 50 }}>
+                {!user?.avatar ? (
+                  <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
+                ) : (
+                  <AntDesign name="closecircleo" size={24} color="#BDBDBD" />
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            data={getUserPost()}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  marginBottom: 20,
+                }}
+              >
+                <Image
+                  source={{ uri: item.photo }}
+                  style={{
+                    ...styles.photo,
+                    width: windowWidth - 16 * 2,
                   }}
                 />
-              </View>
-              <Text style={styles.userName}>Natali Romanova</Text>
-              <View style={styles.avatar}>
-                <TouchableOpacity
-                  style={styles.avatarBtn}
-                  activeOpacity={0.7}
-                  accessibilityLabel="add avatar"
-                  onPress={() => console.log("add avatar")}
-                >
-                  <AddAvatar fill={"#FF6C00"} stroke={"#FF6C00"} />
-                </TouchableOpacity>
-              </View>
-
-              <View>
-                <Image
-                  source={require("../../images/rectangle.jpg")}
-                  style={{ ...styles.photo, width: windowWidth - 16 * 2 }}
-                />
-                <Text style={styles.photoText}>Лес</Text>
+                <Text style={styles.photoText}>{item.title}</Text>
                 <View style={styles.linksContainer}>
                   <View style={styles.wrap}>
                     <TouchableOpacity
                       style={styles.link}
                       activeOpacity={0.7}
                       onPress={() => {
-                        navigation.navigate("CommentsScreen");
+                        navigation.navigate("CommentsScreen", {
+                          photo: item.photo,
+                          postId: item.id,
+                        });
                       }}
                     >
-                      <Feather
-                        name="message-circle"
-                        size={24}
-                        color="#BDBDBD"
+                      <FontAwesome5
+                        name="comment-dots"
+                        size={25}
+                        color="#FF6C00"
                       />
-                      <Text style={{ ...styles.count, marginLeft: 6 }}>8</Text>
+                      <Text style={{ ...styles.count, marginLeft: 6 }}>
+                        {item.comments.length}
+                      </Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity
-                      style={{ ...styles.link, marginLeft: 24 }}
+                      style={{ ...styles.link, marginLeft: 25 }}
                       activeOpacity={0.7}
                       onPress={() => {
                         console.log("like");
                       }}
                     >
-                      <EvilIcons name="like" size={35} color="#BDBDBD" />
+                      <EvilIcons name="like" size={35} color="#FF6C00" />
                       <Text style={styles.count}>153</Text>
                     </TouchableOpacity>
                   </View>
@@ -101,24 +130,22 @@ const ProfileScreen = ({ navigation }) => {
                     style={styles.link}
                     activeOpacity={0.7}
                     onPress={() => {
-                      navigation.navigate("MapScreen");
+                      navigation.navigate("MapScreen", {
+                        location: item.location,
+                      });
                     }}
                   >
                     <Feather name="map-pin" size={24} color="#BDBDBD" />
-                    <Text style={styles.locationText}>Ukraine</Text>
+                    <Text style={styles.locationText}>
+                      {item.location.place}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
-          </KeyboardAvoidingView>
-        </ImageBackground>
-      </View>
-    </TouchableWithoutFeedback>
+            )}
+          />
+        </View>
+      </ImageBackground>
+    </View>
   );
 };
-
-
-export default ProfileScreen
-
-
-

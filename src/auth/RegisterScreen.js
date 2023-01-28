@@ -8,18 +8,20 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   KeyboardAvoidingView,
+  Image,
 } from "react-native";
-
+import { authSignUpUser } from "../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
 import { styles } from "./styled/RegisterScreen.styled";
-
+import * as ImagePicker from "expo-image-picker";
 import AddAvatar from "../../assets/add.svg";
-
 import Input from "../Input";
 
 const initialState = {
-  login: "",
   email: "",
   password: "",
+  nickname: "",
+  photoUri: "",
 };
 
 const RegisterScreen = ({ navigation }) => {
@@ -29,6 +31,8 @@ const RegisterScreen = ({ navigation }) => {
   const [dimensions, setDimension] = useState(
     Dimensions.get("window").width - 16 * 2
   );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const onChange = () => {
@@ -53,12 +57,32 @@ const RegisterScreen = ({ navigation }) => {
 
   const onShow = () => onShowPass((prevShow) => !prevShow);
 
+  const handleSubmit = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+    dispatch(authSignUpUser(state));
+    setState(initialState);
+  };
+
+  const photoHandel = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setState((prevstate) => ({
+        ...prevstate,
+        photoUri: result.assets[0].uri,
+      }));
+    }
+  };
+
   const keyboardHide = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-
-    setState(initialState);
-    console.log(state);
   };
 
   return (
@@ -91,13 +115,12 @@ const RegisterScreen = ({ navigation }) => {
                 }}
               >
                 <Input
-                  name="login"
-                  placeholder="Логин"
-                  state={state.login}
+                  name="nickname"
+                  placeholder="Nickname"
+                  state={state.nickname}
                   setState={setState}
                   setIsShowKeyboard={setIsShowKeyboard}
                 />
-
                 <Input
                   name="email"
                   view={{ style: { marginTop: 16 } }}
@@ -128,7 +151,7 @@ const RegisterScreen = ({ navigation }) => {
                   <TouchableOpacity
                     style={styles.btn}
                     activeOpacity={0.8}
-                    onPress={keyboardHide}
+                    onPress={handleSubmit}
                   >
                     <Text style={styles.btnTitle}>Зарегистрироваться</Text>
                   </TouchableOpacity>
