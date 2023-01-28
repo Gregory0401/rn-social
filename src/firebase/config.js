@@ -1,17 +1,17 @@
-import * as firebase from "firebase";
-import "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDFauNPYaTGMGWKEvyHdTh8m_kfhKDiQuU",
-  authDomain: "rn-social.firebaseapp.com",
-  databaseURL: "https://rn-social.firebaseio.com",
-  projectId: "rn-social",
-  storageBucket: "rn-social.appspot.com",
-  messagingSenderId: "974670373504",
-  appId: "1:974670373504:web:fe01e1286f5ad11ff0fc65",
-  measurementId: "A-DS5TDPZBB4",
+  apiKey: "AIzaSyB5AGa7ytQ5Anc4Agp_ORwIc3ubkDaCbFA",
+  authDomain: "rn-social-app-d05db.firebaseapp.com",
+  projectId: "rn-social-app-d05db",
+  storageBucket: "rn-social-app-d05db.appspot.com",
+  messagingSenderId: "207872487132",
+  appId: "1:207872487132:web:0673c23e083d01787e8e19",
+  measurementId: "G-ZS5TDPZBB2",
 };
-
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
