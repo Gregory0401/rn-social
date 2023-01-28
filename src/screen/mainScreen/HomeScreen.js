@@ -4,13 +4,13 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { View } from "react-native";
 
 import { useDispatch } from "react-redux";
-import { authSignOutUser } from "../../../redux/auth/authOperations";
+import { authSignOutUser } from "../../redux/auth/authOperations";
 
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-import { NestedScreens } from "../NestedScreens/NestedScreens";
-import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
-import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
+import { NestedScreens } from "./NestedScreens";
+import { CreateScreen } from "./CreateScreen";
+import { ProfileScreen } from "./ProfileScreen";
 
 const MainTab = createBottomTabNavigator();
 
@@ -32,7 +32,7 @@ export const HomeScreen = ({ navigation, route }) => {
             },
             headerTitleAlign: "center",
             headerTitleStyle: {
-              fontFamily: "Roboto-Medium",
+              fontFamily: "DMMono-Regular",
               color: "#212121",
               fontSize: 17,
               lineHeight: 22,
@@ -67,7 +67,7 @@ export const HomeScreen = ({ navigation, route }) => {
       />
       <MainTab.Screen
         name="Создать публикацию"
-        component={CreatePostsScreen}
+        component={CreateScreen}
         options={() => {
           return {
             title: "Создать публикацию",
@@ -77,7 +77,7 @@ export const HomeScreen = ({ navigation, route }) => {
             },
             headerTitleAlign: "center",
             headerTitleStyle: {
-              fontFamily: "Roboto-Medium",
+              fontFamily: "DMMono-Regular",
               color: "#212121",
               fontSize: 17,
               lineHeight: 22,

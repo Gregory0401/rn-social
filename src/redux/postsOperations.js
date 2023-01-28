@@ -1,7 +1,7 @@
 import { collection, onSnapshot } from "firebase/firestore";
 import { addRecord, updateRecord } from "../firebase/postsApi";
-import { postsSlice } from "./postsReducer";
-import { authSlice } from "../auth/authReducer";
+import { postsSlice } from "../redux/postsReducer";
+import { authSlice } from "../redux/auth/authReducer";
 import { uploadPhoto } from "../firebase/uploadPhoto";
 import { db } from "../firebase/config";
 

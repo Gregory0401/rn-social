@@ -14,11 +14,9 @@ import {
   Text,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-
 import { Feather } from "@expo/vector-icons";
-import { styles } from "./CommentsScreen.styled";
-
-import { addComment } from "../../../redux/posts/postsOperations";
+import { styles } from "./styled/CommentsScreen.styled";
+import { addComment } from "../../redux/postsOperations";
 
 export const CommentsScreen = ({ route }) => {
   const [photo, setPhoto] = useState(null);

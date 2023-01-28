@@ -4,7 +4,7 @@ import { store } from "./src/redux/store";
 
 import { View } from "react-native";
 
-import { Main } from "./src/Components/main";
+import { Main } from "./src/components/Main";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 

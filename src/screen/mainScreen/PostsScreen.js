@@ -8,9 +8,9 @@ import {
   FlatList,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { subscribePosts } from "../../../redux/posts/postsOperations";
+import { subscribePosts } from "../../redux/postsOperations";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
-import { styles } from "./PostsScreen.styled";
+import { styles } from "./styled/PostsScreen.styled";
 
 export const PostsScreen = ({ navigation, route }) => {
   const user = useSelector((state) => state.auth.user);

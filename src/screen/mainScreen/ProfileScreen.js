@@ -10,11 +10,11 @@ import {
 } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { authSignOutUser } from "../../../redux/auth/authOperations";
+import { authSignOutUser } from "../../redux/auth/authOperations";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Feather, EvilIcons, FontAwesome5 } from "@expo/vector-icons";
-import { styles } from "./ProfileScreen.styled";
+import { styles } from "./styled/ProfileScreen.styled";
 
 export const ProfileScreen = ({ navigation }) => {
   const user = useSelector((state) => state.auth.user);
@@ -42,7 +42,7 @@ export const ProfileScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../../assets/images/photo.jpg")}
+        source={require("../../images/photo.jpg")}
         resizeMode="cover"
         style={styles.image}
       >

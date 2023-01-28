@@ -14,8 +14,8 @@ import {
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
-import { styles } from "./CreatePostsScreen.styled";
-import { addPost } from "../../../redux/posts/postsOperations";
+import { styles } from "./styled/CreateScreen.styled";
+import { addPost } from "../../redux/postsOperations";
 import { useDispatch, useSelector } from "react-redux";
 
 const initialState = {

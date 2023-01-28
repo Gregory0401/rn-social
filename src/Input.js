@@ -11,7 +11,7 @@ const secondary = {
   backgroundColor: "#FFFFFF",
 };
 
- const Input = (props) => {
+const Input = (props) => {
   const [inputBorderColor, setInputBorderColor] = useState(primary);
 
   const onPressInHandler = (style) => () => {
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
   borderRadius: 8,
   padding: 16,
   fontSize: 16,
-  fontFamily: "Roboto-Regular",
+  fontFamily: "DMMono-Regular",
   color: "#212121",
 });
 
-export default Input
+export default Input;

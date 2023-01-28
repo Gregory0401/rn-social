@@ -2,13 +2,13 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Feather } from "@expo/vector-icons";
 
-import  CommentsScreen  from "./CommentsScreen";
-import MapScreen  from "./MapScreen";
-import  PostsScreen  from "./PostsScreen";
+import CommentsScreen from "./CommentsScreen";
+import MapScreen from "./MapScreen";
+import PostsScreen from "./PostsScreen";
 
 const Stack = createStackNavigator();
 
- const NestedScreens = ({ navigation }) => {
+const NestedScreens = ({ navigation }) => {
   return (
     <Stack.Navigator initialRouteName="PostsScreen">
       <Stack.Screen
@@ -29,7 +29,7 @@ const Stack = createStackNavigator();
           },
           headerTitleAlign: "center",
           headerTitleStyle: {
-            fontFamily: "MoonDance-Regular",
+            fontFamily: "DMMono-Regular",
             color: "#212121",
             fontSize: 17,
             lineHeight: 22,
@@ -58,7 +58,7 @@ const Stack = createStackNavigator();
           },
           headerTitleAlign: "center",
           headerTitleStyle: {
-            fontFamily: "MoonDance-Regular",
+            fontFamily: "DMMono-Regular",
             color: "#212121",
             fontSize: 17,
             lineHeight: 22,
@@ -80,4 +80,4 @@ const Stack = createStackNavigator();
   );
 };
 
-export default NestedScreens
+export default NestedScreens;
